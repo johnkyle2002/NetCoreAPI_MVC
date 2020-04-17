@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetCoreModels
+namespace NetCoreMigrationBuilder
 {
     class Program
     {
