@@ -1,46 +1,103 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NetCoreModels;
+using NetCoreMVC.Commons.Helper;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NetCoreMVC.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class EmployeeController : ControllerBase
+    [Authorize]
+    public class EmployeeController : Controller
     {
-        // GET: api/Employee
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IClientHelper _clientHelper;
+
+        public EmployeeController(IClientHelper clientHelper)
         {
-            return new string[] { "value1", "value2" };
+            _clientHelper = clientHelper;
         }
 
-        // GET: api/Employee/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<IActionResult> Index()
         {
-            return "value";
+            var result = await _clientHelper.GetClient<IEnumerable<Employee>>("/api/Employees", null, ClaimsHelper.GetJwtToken(User));
+
+            if (result == null)
+            {
+                ModelState.AddModelError("error", "Unable to retrieve record.");
+                return View(new List<Employee>());
+            }
+
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return View(result.Entity);
+            }
+            else
+            {
+                return View(new List<Employee>());
+            }
         }
 
-        // POST: api/Employee
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Create(Employee employee)
         {
+            if (!ModelState.IsValid)
+                return View(employee);
+
+            var result = await _clientHelper.PostClient("api/Employees", employee, ClaimsHelper.GetJwtToken(User));
+
+            if (result.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(employee);
         }
 
-        // PUT: api/Employee/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Edit(int id)
         {
+            var result = await _clientHelper.GetClient<Employee>("api/Employees", "/" + id, ClaimsHelper.GetJwtToken(User));
+
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return View(result.Entity);
+            }
+            else
+            {
+                return View(new Employee());
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Employee employee)
+        {
+            if (!ModelState.IsValid)
+                return View(employee);
+
+            var result = await _clientHelper.PutClient<Employee>($"api/Employees/{employee.EmployeeID}", employee, ClaimsHelper.GetJwtToken(User));
+
+            if (result.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(employee);
+            }
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
+            var result = await _clientHelper.DeleteClient<Employee>($"api/Employees/{id}", ClaimsHelper.GetJwtToken(User));
+
+            if (result != null)
+            {
+                return new JsonResult(new { success = true });
+            }
+            return new JsonResult(new { success = false });
         }
     }
 }

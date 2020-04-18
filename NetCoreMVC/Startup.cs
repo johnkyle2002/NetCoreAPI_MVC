@@ -39,7 +39,8 @@ namespace NetCoreMVC
                 .AddCookie(options =>
                 {
                     options.ExpireTimeSpan = TimeSpan.Zero;
-                    options.LoginPath = "/home/Login"; 
+                    options.LoginPath = "/home/Login";
+                    options.CookieSecure = CookieSecurePolicy.Always;
                 });
 
             services.AddSession(options =>

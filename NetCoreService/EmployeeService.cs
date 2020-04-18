@@ -1,25 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NetCoreInterface;
+﻿using NetCoreInterface;
 using NetCoreModels;
 using NetCoreRepository;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace NetCoreService
 {
-    public class EmployeeService : IEmployeeService
+    public class EmployeeService : ServiceModel<Employee>, IEmployeeService
     {
-        private readonly NetCoreDBContext _context;
-
-        public EmployeeService(NetCoreDBContext context)
+        public EmployeeService(NetCoreDBContext context) : base(context)
         {
-            _context = context;
         }
-
-        public async Task<IEnumerable<Employee>> GetAll()
-        {
-            return await _context.Employee.ToListAsync();
-        }
-
     }
 }

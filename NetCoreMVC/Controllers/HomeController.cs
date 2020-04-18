@@ -36,7 +36,7 @@ namespace NetCoreMVC.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return View();
+            return RedirectToAction("Login");
         }
 
         class AuthenticationModel
@@ -46,10 +46,10 @@ namespace NetCoreMVC.Controllers
         }
 
 
-
+        
         public async Task<IActionResult> Privacy()
         {
-
+            System.Threading.Thread.Sleep(100);
             return View();
         }
 
@@ -72,7 +72,7 @@ namespace NetCoreMVC.Controllers
             if (!ModelState.IsValid)
                 return View(usrLogin);
 
-            var respo = await _clientHelper.PostClient("api/login", new { username = usrLogin.Username, password = usrLogin.Password });
+            var respo = await _clientHelper.Authenticate("api/login", new { username = usrLogin.Username, password = usrLogin.Password });
 
             if (respo.IsSuccessStatusCode)
             {

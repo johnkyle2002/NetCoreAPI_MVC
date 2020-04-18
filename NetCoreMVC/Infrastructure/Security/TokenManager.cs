@@ -22,14 +22,24 @@ namespace NetCoreMVC.Infrastructure.Security
 
     public class TokenManager : ITokenManager
     {
+        #region Private Member
+        
         private readonly IConfiguration _config;
         private readonly HttpContext _httpContext;
+
+        #endregion
+
+        #region Constructor
 
         public TokenManager(IConfiguration config, IHttpContextAccessor httpContext)
         {
             _config = config;
             _httpContext = httpContext.HttpContext;
         }
+
+        #endregion
+
+        #region Public Method
 
         public string ValidateToken(string token)
         {
@@ -80,7 +90,7 @@ namespace NetCoreMVC.Infrastructure.Security
 
         public async Task LogoutAsync()
         {
-            await _httpContext.SignOutAsync(JwtBearerDefaults.AuthenticationScheme);
+            await _httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         public async Task<bool> Authenticate(String jwtToken)
@@ -90,9 +100,8 @@ namespace NetCoreMVC.Infrastructure.Security
                 // No use if token is empty
                 if (string.IsNullOrWhiteSpace(jwtToken))
                     return false;
-
-                // Logout first
-              //  await LogoutAsync();
+                 
+               await LogoutAsync();
 
                 // Setup handler for processing Jwt token
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -136,7 +145,7 @@ namespace NetCoreMVC.Infrastructure.Security
                     //ExpiresUtc = identity.Claims.First(c => c.Type == JwtRegisteredClaimNames.Exp)?.Value.First()..ToInt64().ToUnixEpochDate(),
                     ExpiresUtc = DateTime.Now.AddMinutes(15),
                     IsPersistent = true
-                     
+
                 };
 
                 // The actual Login
@@ -151,6 +160,6 @@ namespace NetCoreMVC.Infrastructure.Security
             return false;
         }
 
-
+        #endregion
     }
 }

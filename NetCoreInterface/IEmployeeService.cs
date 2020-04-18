@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace NetCoreInterface
 {
-    public interface IEmployeeService
+    public interface IEmployeeService : IServiceModel<Employee>
     {
-        Task<IEnumerable<Employee>> GetAll();
+       
     }
 }
