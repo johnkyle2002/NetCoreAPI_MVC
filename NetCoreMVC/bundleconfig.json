@@ -4,5 +4,11 @@
     "inputFiles": [
       "wwwroot/js/Employees/Index.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/TimeRecord/Index.min.js",
+    "inputFiles": [
+      "wwwroot/js/TimeRecord/Index.js"
+    ]
   }
 ]

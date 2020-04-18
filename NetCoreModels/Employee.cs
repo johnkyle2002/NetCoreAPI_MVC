@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using NetCoreCommons.Extensions;
 namespace NetCoreModels
 {
     public class Employee
@@ -21,10 +21,11 @@ namespace NetCoreModels
         public string LastName { get; set; }
 
         [NotMapped]
-        public string FullName => $"{FirstName} {LastName}";
+        public string FullName => $"{FirstName.ToTitleCase()} {LastName.ToTitleCase()}";
 
         [InverseProperty(nameof(TimeRecord.User))]
         public virtual ICollection<TimeRecord> TimeRecords { get; set; }
+
 
     }
 }

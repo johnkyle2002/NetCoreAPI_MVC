@@ -34,6 +34,7 @@ namespace NetCoreAPI
             services.AddScoped<ITokenManager, TokenManager>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<ITimeRecordService, TimeRecordService>();
 
             services.AddAuthentication(x=> {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

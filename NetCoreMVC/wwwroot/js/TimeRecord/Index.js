@@ -5,7 +5,7 @@ function showDeleteModal(id) {
 }
 
 function deleteRecord() {
-    $.post("/Employee/Delete", { id: trID }, function (result) {
+    $.post("/TimeRecord/Delete", { id: trID }, function (result) {
         if (result.success) {
             $(".tr_" + trID).fadeOut('slow', function () {
                 $(this).remove();

@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using NetCoreInterface;
 using NetCoreModels;
-using NetCoreRepository;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NetCoreAPI.Controllers
@@ -14,13 +11,11 @@ namespace NetCoreAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
-    {
-        private readonly NetCoreDBContext _context;
+    { 
         private readonly IEmployeeService _employeeService;
 
-        public EmployeesController(NetCoreDBContext context, IEmployeeService employeeService)
+        public EmployeesController(IEmployeeService employeeService)
         {
-            _context = context;
             _employeeService = employeeService;
         }
 
