@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NetCoreAPI.Controllers
@@ -11,6 +12,7 @@ namespace NetCoreAPI.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/values
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
@@ -28,6 +30,7 @@ namespace NetCoreAPI.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            var a = value;
         }
 
         // PUT api/values/5

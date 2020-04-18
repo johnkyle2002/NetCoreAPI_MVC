@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace NetCoreModels
 {
-    public class User
+    public class Employee
     {
-        public int UserID { get; set; }
+        public int EmployeeID { get; set; }
 
         [Display(Name = "First Name")]
         [Required]
@@ -22,10 +20,11 @@ namespace NetCoreModels
         [DataType("varchar")]
         public string LastName { get; set; }
 
-
-
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
+
+        [InverseProperty(nameof(TimeRecord.User))]
+        public virtual ICollection<TimeRecord> TimeRecords { get; set; }
 
     }
 }
