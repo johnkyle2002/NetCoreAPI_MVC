@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using NetCoreInterface;
 using NetCoreModels;
 using NetCoreModels.ViewModel;
-using NetCoreRepository;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NetCoreAPI.Controllers
 {
@@ -16,12 +11,10 @@ namespace NetCoreAPI.Controllers
     [ApiController]
     public class TimeRecordsController : ControllerBase
     {
-        private readonly NetCoreDBContext _context;
         private readonly ITimeRecordService _timeRecordService;
 
-        public TimeRecordsController(NetCoreDBContext context, ITimeRecordService timeRecordService)
+        public TimeRecordsController(ITimeRecordService timeRecordService)
         {
-            _context = context;
             _timeRecordService = timeRecordService;
         }
 

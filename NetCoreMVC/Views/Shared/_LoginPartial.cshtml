@@ -9,7 +9,7 @@
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+    <div class="collapse navbar-collapse justify-content-between">
         <ul class="navbar-nav flex-grow-1">
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -19,6 +19,13 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="TimeRecord" asp-action="Index">Time Record</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav float-right">
+            <li class="nav-item">
+                <form method="post" asp-controller="Home" asp-action="Logout">
+                    <button class="dropdown-item btn btn-link navbar-btn" type="submit" value="">Log-out</button>
+                </form>
             </li>
         </ul>
     </div>
