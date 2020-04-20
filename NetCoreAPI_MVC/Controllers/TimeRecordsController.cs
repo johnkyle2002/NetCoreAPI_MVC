@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NetCoreInterface;
 using NetCoreModels;
 using NetCoreModels.ViewModel;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NetCoreAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] 
     [ApiController]
     public class TimeRecordsController : ControllerBase
     {
@@ -23,6 +25,13 @@ namespace NetCoreAPI.Controllers
         public async Task<IEnumerable<TimeRecordViewModel>> GetTimeRecord()
         {
             return await _timeRecordService.GetAllWithUser();
+        }
+        // GET: api/TimeRecords/5
+        [HttpGet("[action]/{id}")]
+ 
+        public async Task<IEnumerable<TimeRecord>> EmployeeTimeRecord(int id)
+        {
+            return  await _timeRecordService.Entity.Where(w=> w.UserID == id).ToListAsync();             
         }
 
         // GET: api/TimeRecords/5

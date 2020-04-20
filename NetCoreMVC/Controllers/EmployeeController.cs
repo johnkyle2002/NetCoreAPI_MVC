@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreModels;
+using NetCoreModels.ViewModel;
 using NetCoreMVC.Commons.Helper;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NetCoreMVC.Controllers
@@ -98,6 +100,24 @@ namespace NetCoreMVC.Controllers
                 return new JsonResult(new { success = true });
             }
             return new JsonResult(new { success = false });
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var employee = await _clientHelper.GetClient<NetCoreModels.Employee>($"/api/Employees/{id}", null, ClaimsHelper.GetJwtToken(User));
+
+            if (employee == null)
+                return NotFound();
+
+            var result = await _clientHelper.GetClient<IEnumerable<TimeRecord>>($"/api/TimeRecords/EmployeeTimeRecord/{id}",null, ClaimsHelper.GetJwtToken(User));
+
+            var model = new EmployeeDetailsViewModel
+            {
+                Employee = employee.Entity,
+                TimeRecords = result.Entity.OrderByDescending(o=> o.StartDateTime).ToList()
+            };
+
+            return View(model);
         }
     }
 }

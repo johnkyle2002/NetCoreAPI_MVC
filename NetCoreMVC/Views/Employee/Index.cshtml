@@ -25,10 +25,14 @@
                 {
                     <tr class="tr_@item.EmployeeID">
                         <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
+                            <a asp-action="Details" asp-route-id="@item.EmployeeID" class="text-body">
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </a>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
+                            <a asp-action="Details" asp-route-id="@item.EmployeeID" class="text-body">
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </a>
                         </td>
                         <td>
                             <div class="btn-group">
@@ -36,6 +40,7 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     <a asp-action="Edit" asp-route-id="@item.EmployeeID" class="dropdown-item">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.EmployeeID" class="dropdown-item">Details</a>
                                     <a href="#" class="dropdown-item text-danger" onclick="showDeleteModal(@item.EmployeeID)">Delete</a>
                                 </div>
                             </div>

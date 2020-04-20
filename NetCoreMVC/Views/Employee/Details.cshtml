@@ -1,0 +1,45 @@
+﻿@model NetCoreModels.ViewModel.EmployeeDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <div class="card">
+        <div class="card-header">Employee Details</div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-md-2">First Name</dt>
+                <dd class="col-md-9">@Model.Employee.FirstName</dd>
+                <dt class="col-md-2">Last Name</dt>
+                <dd class="col-md-9">@Model.Employee.LastName</dd>
+            </dl>
+            <hr />
+            <h6>Time Activity</h6>
+            @if (Model.TimeRecords.Any())
+            {
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Start Time</th>
+                        <th>End Time</th>                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.TimeRecords)
+                    {
+                        <tr>
+                            <td>@item.StartDateTime</td>
+                            <td>@item.EndDateTime</td>                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }
+            else
+            {
+                <span>No activity identified.</span>
+            }
+        </div>
+        <div class="card-footer text-right">            
+            <a href="../Index" class="btn btn-primary text-white">Back</a>
+        </div>
+    </div>
