@@ -71,7 +71,8 @@
     </div>
 </div>
 @section Scripts{
-
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
     <environment include="Development">
         <script src="~/js/TimeRecord/Index.js"></script>
     </environment>
@@ -79,3 +80,6 @@
         <script src="~/js/TimeRecord/Index.min.js"></script>
     </environment>
 } 
+@section Styles{
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}

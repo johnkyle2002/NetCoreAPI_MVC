@@ -14,3 +14,7 @@ function deleteRecord() {
         }
     })
 }
+
+$(document).ready(function () {
+    $("table").DataTable();
+});

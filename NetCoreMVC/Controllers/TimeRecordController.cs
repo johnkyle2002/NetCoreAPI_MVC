@@ -35,7 +35,7 @@ namespace NetCoreMVC.Controllers
 
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                return View(result.Entity);
+                return View(result.Entity.OrderByDescending(o=> o.StartDateTime).ToList());
             }
             else
             {
