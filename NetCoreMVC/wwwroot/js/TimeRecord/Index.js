@@ -13,9 +13,7 @@ function deleteRecord() {
             $("#deleteModel").modal('hide');
         }
     })
-}
-
-
+} 
 $(document).ready(function () {
     $("table").DataTable();
 });
