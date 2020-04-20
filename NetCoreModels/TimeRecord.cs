@@ -13,8 +13,8 @@ namespace NetCoreModels
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy hh:mm:ss tt}")]
         [Display(Name ="End Date")]
         public DateTime EndDateTime { get; set; }
+        [Display(Name = "Employee")]
         public int UserID { get; set; }
-
         [Display(Name ="Employee")]
         [ForeignKey(nameof(UserID))]
         public virtual Employee User { get; set; }

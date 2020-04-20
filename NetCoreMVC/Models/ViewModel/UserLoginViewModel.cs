@@ -10,7 +10,7 @@ namespace NetCoreMVC.Models.ViewModel
     {
         [Required] 
         public string Password { get; set; }
-        [Display(Name = "Password")]
+        [Display(Name = "User Name")]
         [Required]
         public string Username { get; set; }
     }
